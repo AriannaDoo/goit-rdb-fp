@@ -210,33 +210,33 @@ LIMIT 10;
 
 # Завдання 4. Побудова колонки різниці в роках
 
-Для колонки `year` було створено:
-
-- дату першого січня відповідного року;
-- поточну дату;
-- різницю в роках між цими двома датами.
-
-Для цього було використано вбудовані SQL-функції:
-
-- `MAKEDATE`
-- `CURDATE`
-- `TIMESTAMPDIFF`
+ALTER TABLE and UPDATE
 
 ```sql
 USE pandemic;
 
+ALTER TABLE infectious_cases_normalized
+ADD COLUMN first_day_of_year DATE,
+ADD COLUMN today_date DATE,
+ADD COLUMN year_difference INT;
+
+UPDATE infectious_cases_normalized
+SET 
+    first_day_of_year = MAKEDATE(`year`, 1),
+    today_date = CURDATE(),
+    year_difference = TIMESTAMPDIFF(YEAR, MAKEDATE(`year`, 1), CURDATE())
+WHERE case_id > 0
+  AND `year` IS NOT NULL;
+
 SELECT 
     case_id,
     `year`,
-    MAKEDATE(`year`, 1) AS first_day_of_year,
-    CURDATE() AS today_date,
-    TIMESTAMPDIFF(YEAR, MAKEDATE(`year`, 1), CURDATE()) AS year_difference
+    first_day_of_year,
+    today_date,
+    year_difference
 FROM infectious_cases_normalized
-WHERE `year` IS NOT NULL
 LIMIT 20;
-```
-
-<img width="1837" height="1026" alt="p4_year_difference_builtin_functions png" src="https://github.com/user-attachments/assets/1df2d23f-a172-4eeb-a526-e2334cdbc518" />
+```<img width="1892" height="1030" alt="p4_alter_update_year_difference png" src="https://github.com/user-attachments/assets/ee688d0c-f87b-49b2-9b00-a9c6a771f890" />
 
 
 ---
@@ -264,8 +264,6 @@ END //
 
 DELIMITER ;
 ```
-<img width="1845" height="1025" alt="p5_DELIMITER png" src="https://github.com/user-attachments/assets/e46326b8-406d-4166-8119-1f5464ba30c1" />
-
 
 Після створення функцію було використано на даних з таблиці `infectious_cases_normalized`.
 
@@ -281,7 +279,7 @@ WHERE `year` IS NOT NULL
 LIMIT 20;
 ```
 
-<img width="1880" height="1028" alt="p5_custom_function_year_difference png" src="https://github.com/user-attachments/assets/592879ab-235f-4e0d-93fc-a3f396b1ec13" />
+<img width="1872" height="1022" alt="p5_custom_function_year_difference png" src="https://github.com/user-attachments/assets/cb67a01d-c540-4726-b622-2536ad0c6852" />
 
 ---
 
