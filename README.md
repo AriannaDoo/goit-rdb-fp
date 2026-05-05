@@ -253,8 +253,6 @@ LIMIT 20;
 Функція приймає значення року, створює дату першого січня відповідного року та повертає різницю в роках між цією датою і поточною датою.
 
 ```sql
-USE pandemic;
-
 DROP FUNCTION IF EXISTS calculate_year_difference;
 
 DELIMITER //
@@ -268,6 +266,7 @@ BEGIN
 END //
 
 DELIMITER ;
+
 ```
 
 Після створення функцію було використано на даних з таблиці `infectious_cases_normalized`.
@@ -276,9 +275,7 @@ DELIMITER ;
 SELECT 
     case_id,
     `year`,
-    MAKEDATE(`year`, 1) AS first_day_of_year,
-    CURDATE() AS today_date,
-    calculate_year_difference(`year`) AS year_difference
+    calculate_year_difference(`year`) AS calculated_year_difference
 FROM infectious_cases_normalized
 WHERE `year` IS NOT NULL
 LIMIT 20;
