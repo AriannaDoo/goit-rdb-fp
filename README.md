@@ -153,6 +153,7 @@ JOIN entities e
     AND COALESCE(ic.Code, '') = e.code;
 ```
 
+
 <img width="1843" height="1026" alt="p2_entities_table png" src="https://github.com/user-attachments/assets/184afd52-c95e-4802-acf0-7f2ab97439fc" />
 
 
@@ -162,6 +163,8 @@ JOIN entities e
 SELECT COUNT(*) AS normalized_rows
 FROM infectious_cases_normalized;
 ```
+
+
 <img width="1835" height="1020" alt="p2_count_normalized_table png" src="https://github.com/user-attachments/assets/246b4a1e-2171-4340-a264-3e5624155604" />
 
 
@@ -236,7 +239,9 @@ SELECT
     year_difference
 FROM infectious_cases_normalized
 LIMIT 20;
-```<img width="1892" height="1030" alt="p4_alter_update_year_difference png" src="https://github.com/user-attachments/assets/ee688d0c-f87b-49b2-9b00-a9c6a771f890" />
+```
+
+<img width="1892" height="1030" alt="p4_alter_update_year_difference png" src="https://github.com/user-attachments/assets/ee688d0c-f87b-49b2-9b00-a9c6a771f890" />
 
 
 ---
